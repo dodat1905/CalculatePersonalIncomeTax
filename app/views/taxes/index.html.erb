@@ -1,0 +1,36 @@
+<div class="container">
+  <%= form_tag taxes_path, method: :get, remote: true do %>
+    <h3>Enter the monthly income data for the monthly provisional tax amount.</h3>
+    <div class="form-group">
+      <label>Monthly income</label>
+      <%= text_field_tag :monthly_income, 0, class: 'form-control number', required: true %>
+    </div>
+    <div class="form-group">
+      <label>Salary paid for insurance</label>
+      <%= text_field_tag :salary_paid_for_insurance, 0, class: 'form-control number', required: true %>
+    </div>
+    <div class="form-group">
+      <label>Number of dependents</label>
+      <%= text_field_tag :number_dependents, 0, class: 'form-control number', required: true %>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  <% end %>
+  <br />
+  <div class="income-tax">Personal income tax is: <%= number_with_delimiter(@income_tax) %> VND</div>
+</div>
+
+<script>
+  $('.number').keyup(function(event) {
+
+    // skip for arrow keys
+    if(event.which >= 37 && event.which <= 40) return;
+
+    // format number
+    $(this).val(function(index, value) {
+      return value
+      .replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      ;
+    });
+  });
+</script>
